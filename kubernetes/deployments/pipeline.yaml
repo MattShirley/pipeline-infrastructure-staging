@@ -1,9 +1,10 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: django
   labels:
     app: django
+  name: django
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -15,22 +16,20 @@ spec:
         app: django-container
     spec:
       containers:
-        - name: django
-          image: gcr.io/pipeline-tutorial-231718/pipeline:6f526579256123220762571ab2cee76c5367f354
-          ports:
-            - containerPort: 8000
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: user
-
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: password
-
-            - name: POSTGRES_HOST
-              value: postgres-service
+      - env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: postgres-credentials
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres-credentials
+        - name: POSTGRES_HOST
+          value: postgres-service
+        image: gcr.io/pipeline-tutorial-231718/pipeline:1ba38f9f88dc2fc30f1358b27ca104abf2c42295
+        name: django
+        ports:
+        - containerPort: 8000

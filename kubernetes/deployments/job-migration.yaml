@@ -1,28 +1,30 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: django-migration
+  name: django-migrations
+  namespace: default
 spec:
+  backoffLimit: 5
   template:
     spec:
       containers:
-        - name: django
-          image: gcr.io/pipeline-tutorial-231718/pipeline:6f526579256123220762571ab2cee76c5367f354
-          command: ['python', 'manage.py', 'migrate']
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: user
-
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: password
-
-            - name: POSTGRES_HOST
-              value: postgres-service
+      - command:
+        - python
+        - manage.py
+        - migrate
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: postgres-credentials
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: postgres-credentials
+        - name: POSTGRES_HOST
+          value: postgres-service
+        image: gcr.io/pipeline-tutorial-231718/pipeline:1ba38f9f88dc2fc30f1358b27ca104abf2c42295
+        name: django
       restartPolicy: Never
-  backoffLimit: 5
