@@ -29,7 +29,7 @@ spec:
               name: postgres-credentials
         - name: POSTGRES_HOST
           value: postgres-service
-        image: gcr.io/pipeline-tutorial-231718/pipeline:94161c3fabb709970ff21a4b696f1dac265f811f
+        image: gcr.io/pipeline-tutorial-231718/pipeline:5a588ad463b95795df12ca8d6db45e7263c27d79
         name: django
         ports:
         - containerPort: 8000
