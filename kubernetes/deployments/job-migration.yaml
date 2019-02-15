@@ -1,22 +1,18 @@
-apiVersion: apps/v1beta2
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  labels:
-    app: django
-  name: django
+  name: job-migration
   namespace: default
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: django-container
+  backoffLimit: 5
   template:
-    metadata:
-      labels:
-        app: django-container
     spec:
       containers:
-      - env:
+      - command:
+        - python
+        - manage.py
+        - migrate
+        env:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -31,5 +27,4 @@ spec:
           value: postgres-service
         image: gcr.io/pipeline-tutorial-231718/pipeline:b4a6591b7780fa2764e785d7a380908952f21bfc
         name: django
-        ports:
-        - containerPort: 8000
+      restartPolicy: Never
