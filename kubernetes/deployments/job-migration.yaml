@@ -25,6 +25,6 @@ spec:
               name: postgres-credentials
         - name: POSTGRES_HOST
           value: postgres-service
-        image: gcr.io/pipeline-tutorial-231718/pipeline:1ba38f9f88dc2fc30f1358b27ca104abf2c42295
+        image: gcr.io/pipeline-tutorial-231718/pipeline:8ad823f7176220711e311fc3829fadabf6e698ce
         name: django
       restartPolicy: Never
