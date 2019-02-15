@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: django-migration
+  name: job-migration
   namespace: default
 spec:
   backoffLimit: 5
