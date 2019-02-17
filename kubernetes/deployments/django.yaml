@@ -47,9 +47,9 @@ spec:
                   key: password
                   name: postgres-credentials
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
-          command: ["/cloud_sql_proxy",
-                    "-instances=<INSTANCE_CONNECTION_NAME>=tcp:5432",
-                    "-credential_file=/secrets/cloudsql/credentials.json"]
+          #command: ["/cloud_sql_proxy",
+          #          "-instances=<INSTANCE_CONNECTION_NAME>=tcp:5432",
+          #          "-credential_file=/secrets/cloudsql/credentials.json"]
           command: ["cloudsqlpostgres",
                     "host=pipeline-tutorial-231718:us-west1 user=${POSTGRES_USER} dbname=postgres-db password=${POSTGRES_PASSWORD} sslmode=disable"]
           securityContext:
