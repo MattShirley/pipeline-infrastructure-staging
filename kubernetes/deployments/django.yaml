@@ -33,23 +33,28 @@ spec:
         name: django
         ports:
         - containerPort: 8000
-      - command:
-        - cloudsqlpostgres
-        - host=pipeline-tutorial-231718:us-west1 user=${POSTGRES_USER} dbname=postgres-db
-          password=${POSTGRES_PASSWORD} sslmode=disable
-        env:
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              key: user
-              name: postgres-credentials
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: postgres-credentials
+      - name: cloudsql-proxy
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
-        name: cloudsql-proxy
+        command: ["/cloud_sql_proxy",
+                  "-instances=pipeline-tutorial-231718:us-west1:postgres-db=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        # [START cloudsql_security_context]
         securityContext:
+          runAsUser: 2  # non-root user
           allowPrivilegeEscalation: false
-          runAsUser: 2
+        # [END cloudsql_security_context]
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+      # [END proxy_container]
+    # [START volumes]
+    volumes:
+    - name: cloudsql-instance-credentials
+      secret:
+        secretName: mysecret
+        items:
+        - key: serviceaccount
+          path: credentials.json
+    # [END volumes]
+
