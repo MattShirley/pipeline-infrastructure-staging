@@ -48,7 +48,7 @@ spec:
                   key: password
             - name: POSTGRES_HOST
               value: "localhost"
-            - name: POSTGRES_DBNAME
+            - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: cloudsql-db-credentials
