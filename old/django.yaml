@@ -35,7 +35,7 @@ spec:
         - name: cloudsql-proxy
           image: gcr.io/cloudsql-docker/gce-proxy:1.11
           command: ["/cloud_sql_proxy",
-                    "-instances=pipeline-tutorial-231718:us-central1-f:postgres-db=tcp:5432",
+                    "-instances=pipeline-tutorial-231718:us-west1-c:postgres-db=tcp:5432",
                     "-credential_file=/secrets/cloudsql/credentials.json"]
           volumeMounts:
             - name: my-secrets-volume
