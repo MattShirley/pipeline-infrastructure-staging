@@ -40,6 +40,7 @@ spec:
       - command:
         - /cloud_sql_proxy
         - -instances=pipeline-tutorial-231718:us-west1-c:postgres-server2=tcp:5432
+        #- -instances=$GCP_PROJECT:$GCP_REGION:$GCP_SQL_SERVER=tcp:5432
         - -credential_file=/secrets/cloudsql/credentials.json
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         name: cloudsql-proxy
