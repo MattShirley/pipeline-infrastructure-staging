@@ -26,6 +26,19 @@ steps:
       - name: 'kube'
         path: /kube
 
+  # remove job-migration job
+  - name: 'gcr.io/cloud-builders/gcloud'
+    env:
+      - 'KUBECONFIG=/kube/config'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        kubectl delete job job-migration
+    volumes:
+      - name: 'kube'
+        path: /kube
+
   # Recursively apply the configuration files under the kubernetes
   # directory.
   - name: 'gcr.io/cloud-builders/gcloud'
