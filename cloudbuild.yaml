@@ -35,7 +35,7 @@ steps:
     args:
       - '-c'
       - |
-        kubectl apply --recursive -f kubernetes/deployments/django
+        kubectl apply --recursive -f kubernetes/deployments/
     volumes:
       - name: 'kube'
         path: /kube
