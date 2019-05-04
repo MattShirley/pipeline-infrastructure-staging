@@ -33,7 +33,7 @@ spec:
             secretKeyRef:
               key: dbname
               name: cloudsql-db-credentials
-        image: gcr.io/pipeline-tutorial-231718/pipeline:8ec0a5d5181359e0aff01a440892a785797e26e4
+        image: gcr.io/pipeline-tutorial-231718/pipeline:6d102f5a2f43b47e8af6db8ba757330aed846408
         name: django
         ports:
         - containerPort: 8000
